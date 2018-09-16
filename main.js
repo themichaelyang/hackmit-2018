@@ -1,13 +1,23 @@
 const { app, BrowserWindow, TouchBar } = require('electron')
 const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
 
-let window
-
 app.once('ready', () => {
-  window = new BrowserWindow({
+  const window = new BrowserWindow({
     width: 200,
     height: 200
   })
   window.loadURL(`file://${__dirname}/index.html`)
-  // window.setTouchBar(touchBar)
+  
+  const touchBarItems = createTouchBarItems()
+  window.setTouchBar(new TouchBar(touchBarItems))
 })
+
+function createTouchBarItems() {
+  const touchBar = []
+  for (let i = 0; i < 36; i++) {
+    touchBar.push(new TouchBarLabel({ 
+      label: (i % 10).toString()
+    }))
+  }
+  return touchBar
+}
