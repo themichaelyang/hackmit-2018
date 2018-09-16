@@ -1,0 +1,16 @@
+{
+  "name": "uneven-basin-put",
+  "productName": "uneven-basin-put",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "michaelyang",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "2.0.7"
+  }
+}
