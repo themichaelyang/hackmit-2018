@@ -1,5 +1,8 @@
 const { app, BrowserWindow, TouchBar } = require('electron')
-const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
+const { TouchBarLabel, TouchBarButton } = TouchBar
+
+let shoot = false
+const fps = 30
 
 app.once('ready', () => {
   const window = new BrowserWindow({
@@ -9,15 +12,44 @@ app.once('ready', () => {
   window.loadURL(`file://${__dirname}/index.html`)
   
   const touchBarItems = createTouchBarItems()
-  window.setTouchBar(new TouchBar(touchBarItems))
+  const touchBar = new TouchBar(touchBarItems)
+  touchBar.escapeItem = new TouchBarButton({label: '|', click: handleClick })
+  window.setTouchBar(touchBar)
+  setTimeout(() => {
+    run(touchBarItems)
+  }, 1000 / fps)
 })
 
+function handleClick() {
+  shoot = true
+}
+
 function createTouchBarItems() {
-  const touchBar = []
+  const touchBarItems = []
   for (let i = 0; i < 36; i++) {
-    touchBar.push(new TouchBarLabel({ 
-      label: (i % 10).toString()
+    touchBarItems.push(new TouchBarLabel({ 
+      label: '-'
     }))
   }
-  return touchBar
+  return touchBarItems
+}
+
+function run(touchBarItems) {
+  update(touchBarItems)
+    setTimeout(() => {
+    run(touchBarItems)
+  }, 1000 / fps)
+}
+
+function update(touchBarItems) {
+  for (let i = touchBarItems.length - 1; i >= 1; i--) {
+    touchBarItems[i].label = touchBarItems[i - 1].label
+  }
+  if (shoot) {
+    touchBarItems[0].label = '>'
+  }
+  else {
+    touchBarItems[0].label = '-'
+  }
+  shoot = false
 }
