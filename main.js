@@ -13,7 +13,7 @@ app.once('ready', () => {
   
   const touchBarItems = createTouchBarItems()
   const touchBar = new TouchBar(touchBarItems)
-  touchBar.escapeItem = new TouchBarButton({label: '|', click: handleClick })
+  touchBar.escapeItem = new TouchBarButton({label: '︻デ═一 ', click: handleClick })
   window.setTouchBar(touchBar)
   setTimeout(() => {
     run(touchBarItems)
@@ -26,9 +26,9 @@ function handleClick() {
 
 function createTouchBarItems() {
   const touchBarItems = []
-  for (let i = 0; i < 36; i++) {
+  for (let i = 0; i < 48; i++) {
     touchBarItems.push(new TouchBarLabel({ 
-      label: '-'
+      label: ' '
     }))
   }
   return touchBarItems
@@ -46,10 +46,10 @@ function update(touchBarItems) {
     touchBarItems[i].label = touchBarItems[i - 1].label
   }
   if (shoot) {
-    touchBarItems[0].label = '>'
+    touchBarItems[0].label = '◦'
   }
   else {
-    touchBarItems[0].label = '-'
+    touchBarItems[0].label = ' '
   }
   shoot = false
 }
